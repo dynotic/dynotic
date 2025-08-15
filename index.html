@@ -1,0 +1,235 @@
+<!DOCTYPE html>  <html lang="id">  
+<head>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>Dashboard Royalti - Betch Record</title>  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  
+  <style>  
+    body {  
+      margin: 0;  
+      font-family: 'Segoe UI', sans-serif;  
+      background-color: #0f0f0f;  
+      color: #fff;  
+    }  
+    header {  
+      background-color: #1a1a1a;  
+      padding: 1rem 2rem;  
+      font-size: 1.5rem;  
+      font-weight: bold;  
+      display: flex;  
+      justify-content: space-between;  
+      align-items: center;  
+    }  
+    .container {  
+      padding: 2rem;  
+      max-width: 1000px;  
+      margin: auto;  
+    }  
+    .card {  
+      background-color: #1e1e1e;  
+      border-radius: 1rem;  
+      padding: 1.5rem;  
+      margin-bottom: 1.5rem;  
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);  
+    }  
+    .btn {  
+      background-color: #9b59b6;  
+      border: none;  
+      padding: 0.7rem 1.2rem;  
+      border-radius: 0.6rem;  
+      color: #fff;  
+      cursor: pointer;  
+      font-weight: bold;  
+      transition: background-color 0.3s ease;  
+    }  
+    .btn:hover {  
+      background-color: #8e44ad;  
+    }  
+    .section-title {  
+      font-size: 1.3rem;  
+      margin-bottom: 1rem;  
+      color: #c39bd3;  
+    }  
+    table {  
+      width: 100%;  
+      border-collapse: collapse;  
+    }  
+    th, td {  
+      padding: 0.5rem;  
+      text-align: left;  
+      border-bottom: 1px solid #333;  
+    }  
+    footer {  
+      text-align: center;  
+      margin: 2rem 0;  
+      color: #aaa;  
+    }  
+    .profile {  
+      display: flex;  
+      align-items: center;  
+      gap: 1rem;  
+    }  
+    .profile img {  
+      width: 60px;  
+      height: 60px;  
+      border-radius: 50%;  
+      border: 2px solid #9b59b6;  
+    }  
+    .modal {  
+      position: fixed;  
+      top: 0; left: 0;  
+      width: 100%; height: 100%;  
+      background: rgba(0,0,0,0.7);  
+      display: none;  
+      justify-content: center;  
+      align-items: center;  
+      z-index: 1000;  
+    }  
+    .modal-content {  
+      background: #1e1e1e;  
+      padding: 2rem;  
+      border-radius: 1rem;  
+      width: 90%;  
+      max-width: 400px;  
+    }  
+    .modal-content input {  
+      width: 100%;  
+      padding: 0.5rem;  
+      margin-top: 0.5rem;  
+      margin-bottom: 1rem;  
+      border-radius: 0.5rem;  
+      border: none;  
+      background: #333;  
+      color: white;  
+    }  
+    .modal-content label {  
+      font-size: 0.9rem;  
+    }  
+    .modal-content .btn {  
+      width: 100%;  
+    }  
+    @media (max-width: 768px) {  
+      header {  
+        flex-direction: column;  
+        align-items: flex-start;  
+      }  
+      table, th, td {  
+        font-size: 0.85rem;  
+      }  
+    }  
+  </style>  
+</head>  
+<body>  
+  <header>  
+    <div>PT.Betch Stopover</div>  
+    <div class="profile">  
+      <img src="https://i.imgur.com/MWNAAdj.jpeg" alt="avatar">  
+      <div>  
+        <div><strong>heyDarryl</strong></div>  
+        <div style="font-size: 0.85rem; color: #aaa;">Artis Terverifikasi</div>  
+      </div>  
+    </div>  
+  </header>    <div class="container">  
+    <div class="card">  
+      <div class="section-title">Total Pendapatan Royalti</div>  
+      <h2>€ 12.380,00</h2>  
+      <p>Saldo Tersedia: <strong>€ 3.280,00</strong></p>  
+      <button class="btn" onclick="bukaFormPenarikan()">Tarik Saldo</button>  
+    </div>  <div class="card">  
+  <div class="section-title">Grafik Pendapatan Bulanan</div>  
+  <canvas id="royaltyChart" height="100"></canvas>  
+</div>  
+
+<div class="card">  
+  <div class="section-title">Katalog Lagu</div>  
+  <table>  
+    <thead>  
+      <tr>  
+        <th>Judul Lagu</th>  
+        <th>Artis</th>  
+        <th>Label</th>  
+        <th>Royalti</th>  
+      </tr>  
+    </thead>  
+    <tbody>  
+      <tr><td>Lonely Train</td><td>heyDarryl</td><td>Rhythmic 9 LLC</td><td>€ 800,00</td></tr>  
+      <tr><td>Rainy Mind</td><td>heyDarryl</td><td>Rhythmic 9 LLC</td><td>€ 420,00</td></tr>  
+      <tr><td>City Light</td><td>heyDarryl</td><td>Rhythmic 9 LLC</td><td>€ 560,00</td></tr>  
+    </tbody>  
+  </table>  
+</div>  
+
+<div class="card">  
+  <div class="section-title">Riwayat Penarikan</div>  
+  <table>  
+    <thead>  
+      <tr><th>Tanggal</th><th>Jumlah</th><th>Status</th></tr>  
+    </thead>  
+    <tbody>  
+      <tr><td>12 Juli 2025</td><td>€ 1.000,00</td><td><span style="color: limegreen; font-weight:bold;">Sukses</span></td></tr>  
+      <tr><td>15 Juni 2025</td><td>€ 1.200,00</td><td><span style="color: limegreen; font-weight:bold;">Sukses</span></td></tr>  
+    </tbody>  
+  </table>  
+</div>
+
+  </div>    <footer>  
+    &copy; 2025 Betch Stopover. All rights reserved.  
+  </footer>    <!-- Modal Form Tarik Saldo -->    <div class="modal" id="formTarik">  
+    <div class="modal-content">  
+      <h3 style="color: #c39bd3; margin-bottom: 1rem;">Form Penarikan Saldo</h3>  
+      <label>Nama Pemilik Rekening</label>  
+      <input type="text" id="namaRek" placeholder="Contoh: Darryl Wijaya">  
+      <label>Nomor Rekening</label>  
+      <input type="text" id="noRek" placeholder="Contoh: 1234567890">  
+      <button class="btn" onclick="kirimPenarikan()">Kirim Permintaan</button>  
+    </div>  
+  </div>    <script>  
+    const ctx = document.getElementById('royaltyChart');  
+    new Chart(ctx, {  
+      type: 'bar',  
+      data: {  
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul'],  
+        datasets: [{  
+          label: 'Royalti Bulanan',  
+          data: [800, 950, 1050, 1120, 980, 1230, 1380],  
+          backgroundColor: '#9b59b6'  
+        }]  
+      },  
+      options: {  
+        scales: {  
+          y: {  
+            beginAtZero: true,  
+            ticks: {  
+              callback: (val) => '€ ' + val.toLocaleString()  
+            }  
+          }  
+        }  
+      }  
+    });  
+  
+    function bukaFormPenarikan() {  
+      document.getElementById('formTarik').style.display = 'flex';  
+    }  
+  
+    function kirimPenarikan() {  
+      const nama = document.getElementById('namaRek').value;  
+      const noRek = document.getElementById('noRek').value;  
+  
+      if (nama && noRek) {  
+        alert(`Permintaan penarikan atas nama ${nama} dengan rekening ${noRek} telah dikirim. Admin akan memproses dalam 1x24 jam.`);  
+        document.getElementById('formTarik').style.display = 'none';  
+      } else {  
+        alert("Mohon isi semua data dengan lengkap.");  
+      }  
+    }  
+  
+    // Tutup modal jika klik di luar form  
+    window.onclick = function(event) {  
+      const modal = document.getElementById('formTarik');  
+      if (event.target === modal) {  
+        modal.style.display = "none";  
+      }  
+    }  
+  </script>  </body>  
+</html>
+
